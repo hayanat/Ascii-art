@@ -1,0 +1,94 @@
+adan.ir1, hayanat2002
+----------------------------------------------------------------------------------------------------------
+1.Classes:
+
+a) Image Class:
+-) Serves as a representation of a image.
+
+b) SubImage Class:
+-) Serves as a representation of a sub image with specific functionality such as calculating gray value.
+-) Inherits Image (because a sub image is also an image).
+
+d) ImagePadding Class:
+-) Serves as a representation of a padded image with white pixels.
+-) Compose an image(in order to pad it).
+
+e) ImageManager Class:
+-) Serves as a representation of an Image manager, it manages the image by padding it and then
+ dividing it into sub-images based on resolution.
+-) Compose an Image(in order to pad it), Compose a 2D list of SubImage(in order to cut the padded image
+  and return them), use -dependency- ImagePadding (in order to pad the original image).
+
+f) CharConverter Class:
+-) Serves as a class that converts characters into boolean arrays that represent how they appear on screen.
+
+g) SubImgCharMatcher Class:
+-) Serves as a class that matches characters to image brightness levels for ASCII art generation.
+-) use -dependency- CharConverter (in order to get the boolean 2D array that represents a character).
+
+h) ConsoleAsciiOutput Class:
+-) Serves as a class that outputs ASCII art to the console.
+-) implements AsciiOutput.
+
+i) HtmlAsciiOutput Class:
+-) Serves as a class that outputs ASCII art to an HTML file.
+-) implements AsciiOutput.
+
+j) KeyboardInput Class:
+-) Serves as a class that handles user input from the keyboard.
+
+k) AsciiArtAlgorithm Class:
+-) Serves as a representation of the algorithm for generating ASCII art from images.
+-) Compose an ImageManager (in order to get the sub images for the algorithm), Compose SubImgCharMatcher
+ (in order to match the sub images to matching characters), use -dependency- a 2D list of
+ SubImage (to transfer them into chars).
+
+l) Shell Class:
+-) Serves as a command-line interface for interacting with the ASCII art generation system.
+-) Compose AsciiOutput (in order to output the result to console/HTML file,
+  Compose SubImgCharMatcher (in order to run the algorithm), Compose ImageManager
+  (in order to run the algorithm),
+  -- Dependency --
+  *) Image (in order to process it).
+  *) ImageManager (in order to manage the image).
+  *) SubImgCharMatcher (in order to match character in ASCII art making).
+  *) AsciiOutput - interface - (in order to output results).
+  *) ConsoleAsciiOutput and HtmlAsciiOutput classes (in order to output results).
+  *) IOException (in order to handle input/output exceptions).
+  *) AsciiArtAlgorithm (in order to generate ASCII art from images).
+  *)  KeyboardInput (in order to read user input during runtime).
+
+----------------------------------------------------------------------------------------------------------
+ 2.Data Structures:
+
+ a) HashMap<Character, Double> in SubImgCharMatcher: Used to store brightness values for characters in
+  the character set. Chosen for efficient lookup and storage of brightness values such that every function we
+  implemented took only O(n) or O(1) in average. The memory complexity is also O(n) because
+  we only saved the HashMap (n represent the number of characters).
+
+ b) List<Character> in SubImgCharMatcher: Used to return a list of the keys, in order to go over them
+  when printing them in the Shell Class. time complexity is O(n) due creating it, we don't store
+  it inside the Class we make it only when needed so it takes temporarily O(n) memory complexity.
+
+ c) List<Character> in Shell: as explained above we only use it to print, time complexity is O(n) , we don't
+ store it inside the Class we make it only when needed so it takes temporarily O(n) memory complexity.
+
+----------------------------------------------------------------------------------------------------------
+3.Exception Handling:
+
+All the exceptions we encounter are related to input/output problems. Since these issues fall under the
+umbrella of IOException, we chose to throw this exception in all of our methods that deals with
+input/output and to catch them in the run method as required, printing appropriate messages to explain
+to the user what's wrong. We saw that creating custom exception classes is
+considered unnecessary, Using the standard IOException class sufficed for handling these issues effectively. 
+
+----------------------------------------------------------------------------------------------------------
+4.Changes in the API of SubImgCharMatcher Class:
+
+a) added a new method called getChars in order to get the list of keys (Character) to print them in the
+  Shell class.
+
+----------------------------------------------------------------------------------------------------------
+5. Changes in the API of the provided Classes: None.
+
+----------------------------------------------------------------------------------------------------------
